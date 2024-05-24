@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback UI</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to right, #1f4037, #99f2c8); 
+        font-family: "Arial", sans-serif;
+      }
+      #container {
+        display: flex;
+        flex-direction: column;
+        /* border: 2px solid #ff4757; */
+        border-radius: 10px;
+        padding: 3rem;
+        background-color: #E9FFFF;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: all .3s;
+      }
+      #container:hover{
+        transform: scale(1.1);
+      }
+      h1 {
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      #emoji {
+        display: flex;
+        justify-content: space-around;
+        column-gap: 2rem;
+      }
+      .emoji {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.5rem;
+    
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s;
+        padding: 1rem;
+        cursor: pointer;
+        background-color: #E9FFFF;
+      }
+      .emoji:hover {
+        background-color:#8FBC8F;
+        color: white;
+        transform: scale(1.1);
+      }
+      .emoji img {
+        height: 3rem;
+        width: 3rem;
+      }
+      button {
+        width: 8rem;
+        padding: 0.5rem 1rem;
+        margin: 2rem auto 0;
+        background-color: #008B8B;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+      button:hover {
+        /* background-color: #e63946;
+         */
+        transform: scale(1.05);
+        box-shadow: 1px 2px 3px black;
+      }
+      #feedback {
+        display: none;
+        text-align: center;
+        
+        /* border: 2px solid red; */
+      }
+    
+      #feedback h2 {
+        color: #006400;
+        margin-bottom: 1rem;
+      }
+      #feedback p {
+        margin-bottom: 1rem;
+        font-family: sans-serif;
+        font-weight: 900;
+      }
+      #feedback h3 {
+        color:#006400;
+      }
+      #report span {
+        font-family: sans-serif;
+        font-weight: 900;
+      }
+      #report{
+        color: #006400;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1 id="h1">Feedback UI</h1>
+      <div id="emoji">
+        <div id="unhappy" class="emoji">
+          <img src="unhappy.png" alt="Unhappy" />
+          <span>Unhappy</span>
+        </div>
+        <div id="neutral" class="emoji">
+          <img src="neutral.png" alt="Neutral" />
+          <span>Neutral</span>
+        </div>
+        <div id="happy" class="emoji">
+          <img src="happy.png" alt="Happy" />
+          <span>Happy</span>
+        </div>
+      </div>
+      <button id="button">Send Review</button>
+      <div id="feedback">
+        <h2>Thank You</h2>
+        <p id="report">Feedback:</p>
+        <h3>
+          We'll use your feedback to improve <br />
+          our customer support.
+        </h3>
+      </div>
+    </div>
+    <script>
+      let emojiList = document.querySelectorAll(".emoji");
+      let button = document.getElementById("button");
+      let feedBack = document.getElementById("feedback");
+      let emoji = document.getElementById("emoji");
+      let h1 = document.getElementById("h1");
+      let report = document.getElementById("report");
+      feedBack.style.display = "none";
+      var text = "";
+
+      emojiList.forEach(function (element) {
+        element.addEventListener("click", function (event) {
+          emojiList.forEach(function (elem) {
+            elem.style.backgroundColor = "";
+          });
+          if (
+            event.target.tagName === "IMG" ||
+            event.target.tagName === "SPAN"
+          ) {
+            text = event.currentTarget.innerText;
+          } else {
+            text = event.target.innerText;
+          }
+          event.currentTarget.style.backgroundColor = "#8FBC8F";
+        });
+      });
+
+      button.addEventListener("click", function () {
+        if (text === "") {
+          alert("choose a review");
+          return;
+        }
+        const span = document.createElement("span");
+        span.innerText = text;
+        report.appendChild(span);
+        if (report.children.length == 2) {
+          report.removeChild(report.children[0]);
+        }
+        emoji.style.display = "none";
+        h1.style.display = "none";
+        button.style.display = "none";
+        feedBack.style.display = "block";
+      });
+    </script>
+  </body>
+</html>
